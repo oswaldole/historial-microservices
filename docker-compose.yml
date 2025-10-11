@@ -1,0 +1,143 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for Auth Service
+  auth-db:
+    image: postgres:16-alpine
+    container_name: historial-auth-db
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+    networks:
+      - historial-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL Database for Activity Service
+  activity-db:
+    image: postgres:16-alpine
+    container_name: historial-activity-db
+    environment:
+      POSTGRES_DB: activity_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - activity-db-data:/var/lib/postgresql/data
+    networks:
+      - historial-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: historial-auth-service
+    environment:
+      DB_HOST: auth-db
+      DB_PORT: 5432
+      DB_NAME: auth_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    ports:
+      - "8081:8081"
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    networks:
+      - historial-network
+    restart: unless-stopped
+
+  # Activity Service
+  activity-service:
+    build:
+      context: ./activity-service
+      dockerfile: Dockerfile
+    container_name: historial-activity-service
+    environment:
+      DB_HOST: activity-db
+      DB_PORT: 5432
+      DB_NAME: activity_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    ports:
+      - "8082:8082"
+    depends_on:
+      activity-db:
+        condition: service_healthy
+    networks:
+      - historial-network
+    restart: unless-stopped
+
+  # Report Service
+  report-service:
+    build:
+      context: ./report-service
+      dockerfile: Dockerfile
+    container_name: historial-report-service
+    environment:
+      ACTIVITY_SERVICE_URL: http://activity-service:8082
+    ports:
+      - "8083:8083"
+    depends_on:
+      - activity-service
+    networks:
+      - historial-network
+    restart: unless-stopped
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: historial-api-gateway
+    environment:
+      AUTH_SERVICE_URL: http://auth-service:8081
+      ACTIVITY_SERVICE_URL: http://activity-service:8082
+      REPORT_SERVICE_URL: http://report-service:8083
+    ports:
+      - "8090:8080"
+    depends_on:
+      - auth-service
+      - activity-service
+      - report-service
+    networks:
+      - historial-network
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: historial-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - historial-network
+    restart: unless-stopped
+
+volumes:
+  auth-db-data:
+  activity-db-data:
+
+networks:
+  historial-network:
+    driver: bridge
