@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import { activityService } from '../services/activityService'
 import { FileText, Wrench, Clock } from 'lucide-react'
+import { Activity, ActivityStats } from '../types/activity'
 
 const Dashboard = () => {
-  const [recentActivities, setRecentActivities] = useState([])
-  const [stats, setStats] = useState({
+  const [recentActivities, setRecentActivities] = useState<Activity[]>([])
+  const [stats, setStats] = useState<ActivityStats>({
     total: 0,
     fallas: 0,
     rutinas: 0,

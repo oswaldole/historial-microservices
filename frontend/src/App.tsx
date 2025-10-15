@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Activities from './pages/Activities'
 import Reports from './pages/Reports'
+import Users from './pages/Users'
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {
@@ -25,6 +26,11 @@ function App() {
           <Route path="/reports" element={
             <PrivateRoute>
               <Reports />
+            </PrivateRoute>
+          } />
+          <Route path="/users" element={
+            <PrivateRoute>
+              <Users />
             </PrivateRoute>
           } />
           <Route path="/" element={<Navigate to="/login" replace />} />

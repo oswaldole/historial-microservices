@@ -1,8 +1,13 @@
+import { ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Home, FileText, BarChart3, LogOut } from 'lucide-react'
+import { Home, FileText, BarChart3, Users, LogOut } from 'lucide-react'
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode
+}
+
+const Layout = ({ children }: LayoutProps) => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -28,10 +33,16 @@ const Layout = ({ children }) => {
                   <span>Actividades</span>
                 </Link>
                 {user?.tipo === 'admin' && (
-                  <Link to="/reports" className="flex items-center space-x-2 hover:bg-gray-700 px-3 py-2 rounded">
-                    <BarChart3 size={20} />
-                    <span>Reportes</span>
-                  </Link>
+                  <>
+                    <Link to="/reports" className="flex items-center space-x-2 hover:bg-gray-700 px-3 py-2 rounded">
+                      <BarChart3 size={20} />
+                      <span>Reportes</span>
+                    </Link>
+                    <Link to="/users" className="flex items-center space-x-2 hover:bg-gray-700 px-3 py-2 rounded">
+                      <Users size={20} />
+                      <span>Usuarios</span>
+                    </Link>
+                  </>
                 )}
               </div>
             </div>

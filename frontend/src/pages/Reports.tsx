@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import { reportService } from '../services/reportService'
 import { BarChart3, PieChart } from 'lucide-react'
+import { ReportSummary } from '../types/report'
 
 const Reports = () => {
-  const [summary, setSummary] = useState(null)
+  const [summary, setSummary] = useState<ReportSummary | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

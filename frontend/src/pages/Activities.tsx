@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, FormEvent } from 'react'
 import Layout from '../components/Layout'
 import { activityService } from '../services/activityService'
 import { useAuth } from '../context/AuthContext'
 import { Plus, Trash2, Search } from 'lucide-react'
+import { Activity, ActivityFormData } from '../types/activity'
 
 const Activities = () => {
   const { user } = useAuth()
-  const [activities, setActivities] = useState([])
-  const [filteredActivities, setFilteredActivities] = useState([])
+  const [activities, setActivities] = useState<Activity[]>([])
+  const [filteredActivities, setFilteredActivities] = useState<Activity[]>([])
   const [showForm, setShowForm] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  const [filterType, setFilterType] = useState('ALL')
+  const [filterType, setFilterType] = useState<'ALL' | 'FALLA' | 'RUTINA' | 'TRABAJO_TALLER'>('ALL')
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ActivityFormData>({
     tipo: 'FALLA',
     categoria: 'ZONA_CALIENTE',
     equipo: '',
@@ -28,6 +29,7 @@ const Activities = () => {
 
   useEffect(() => {
     filterActivities()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activities, searchTerm, filterType])
 
   const loadActivities = async () => {
@@ -56,7 +58,7 @@ const Activities = () => {
     setFilteredActivities(filtered)
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       await activityService.create(formData)
@@ -77,7 +79,8 @@ const Activities = () => {
     }
   }
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number | undefined) => {
+    if (!id) return
     if (window.confirm('¿Está seguro de eliminar esta actividad?')) {
       try {
         await activityService.delete(id)
@@ -112,7 +115,7 @@ const Activities = () => {
                   <label className="block text-sm font-medium text-gray-700">Tipo</label>
                   <select
                     value={formData.tipo}
-                    onChange={(e) => setFormData({ ...formData, tipo: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, tipo: e.target.value as ActivityFormData['tipo'] })}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
                     required
                   >
@@ -126,7 +129,7 @@ const Activities = () => {
                   <label className="block text-sm font-medium text-gray-700">Categoría</label>
                   <select
                     value={formData.categoria}
-                    onChange={(e) => setFormData({ ...formData, categoria: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, categoria: e.target.value as ActivityFormData['categoria'] })}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
                     required
                   >
@@ -170,7 +173,7 @@ const Activities = () => {
                 <textarea
                   value={formData.descripcion}
                   onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
-                  rows="4"
+                  rows={4}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
                   required
                 />
@@ -209,7 +212,7 @@ const Activities = () => {
             </div>
             <select
               value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
+              onChange={(e) => setFilterType(e.target.value as typeof filterType)}
               className="px-4 py-2 border border-gray-300 rounded-md text-gray-900"
             >
               <option value="ALL">Todos</option>
@@ -251,7 +254,7 @@ const Activities = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{activity.turno}</td>
                     <td className="px-6 py-4 text-sm text-gray-900">{activity.descripcion.substring(0, 50)}...</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(activity.createdAt).toLocaleDateString()}
+                      {activity.createdAt && new Date(activity.createdAt).toLocaleDateString()}
                     </td>
                     {user?.tipo === 'admin' && (
                       <td className="px-6 py-4 whitespace-nowrap">
