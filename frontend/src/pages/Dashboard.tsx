@@ -35,75 +35,92 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <div className="space-y-6">
-        <h1 className="text-3xl font-bold text-gray-800">Panel de Control</h1>
+      <div className="space-y-5">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-win11-gray-text">Panel de Control</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow">
+        {/* Stats Cards - Windows 11 Style */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white p-5 rounded-win11 shadow-win11 border border-win11-gray-border hover:shadow-win11-hover transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Total Actividades</p>
-                <p className="text-3xl font-bold text-gray-800">{stats.total}</p>
+                <p className="text-win11-gray-muted text-xs font-medium uppercase tracking-wide">Total Actividades</p>
+                <p className="text-3xl font-semibold text-win11-gray-text mt-2">{stats.total}</p>
               </div>
-              <FileText className="text-blue-500" size={40} />
+              <div className="bg-win11-blue/10 p-3 rounded-win11">
+                <FileText className="text-win11-blue-accent" size={28} />
+              </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-5 rounded-win11 shadow-win11 border border-win11-gray-border hover:shadow-win11-hover transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Fallas</p>
-                <p className="text-3xl font-bold text-red-600">{stats.fallas}</p>
+                <p className="text-win11-gray-muted text-xs font-medium uppercase tracking-wide">Fallas</p>
+                <p className="text-3xl font-semibold text-win11-red mt-2">{stats.fallas}</p>
               </div>
-              <FileText className="text-red-500" size={40} />
+              <div className="bg-win11-red/10 p-3 rounded-win11">
+                <FileText className="text-win11-red" size={28} />
+              </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-5 rounded-win11 shadow-win11 border border-win11-gray-border hover:shadow-win11-hover transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Rutinas</p>
-                <p className="text-3xl font-bold text-green-600">{stats.rutinas}</p>
+                <p className="text-win11-gray-muted text-xs font-medium uppercase tracking-wide">Rutinas</p>
+                <p className="text-3xl font-semibold text-win11-green mt-2">{stats.rutinas}</p>
               </div>
-              <Clock className="text-green-500" size={40} />
+              <div className="bg-win11-green/10 p-3 rounded-win11">
+                <Clock className="text-win11-green" size={28} />
+              </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-5 rounded-win11 shadow-win11 border border-win11-gray-border hover:shadow-win11-hover transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Trabajos Taller</p>
-                <p className="text-3xl font-bold text-purple-600">{stats.trabajos}</p>
+                <p className="text-win11-gray-muted text-xs font-medium uppercase tracking-wide">Trabajos Taller</p>
+                <p className="text-3xl font-semibold text-win11-purple mt-2">{stats.trabajos}</p>
               </div>
-              <Wrench className="text-purple-500" size={40} />
+              <div className="bg-win11-purple/10 p-3 rounded-win11">
+                <Wrench className="text-win11-purple" size={28} />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b">
-            <h2 className="text-xl font-semibold text-gray-800">Actividades Recientes</h2>
+        {/* Recent Activities - Windows 11 Style */}
+        <div className="bg-white rounded-win11 shadow-win11 border border-win11-gray-border">
+          <div className="px-5 py-4 border-b border-win11-gray-border">
+            <h2 className="text-lg font-semibold text-win11-gray-text">Actividades Recientes</h2>
           </div>
-          <div className="p-6">
+          <div className="p-5">
             {recentActivities.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">No hay actividades registradas</p>
+              <p className="text-win11-gray-muted text-center py-12">No hay actividades registradas</p>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {recentActivities.map((activity) => (
-                  <div key={activity.id} className="border-l-4 border-blue-500 pl-4 py-2">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="font-semibold text-gray-800">{activity.equipo}</p>
-                        <p className="text-sm text-gray-600">{activity.descripcion}</p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {activity.tecnico} - Turno {activity.turno}
+                  <div
+                    key={activity.id}
+                    className="p-4 rounded-win11 border border-win11-gray-border hover:bg-win11-gray-light transition-colors"
+                  >
+                    <div className="flex justify-between items-start gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-win11-gray-text truncate">{activity.equipo}</p>
+                        <p className="text-sm text-win11-gray-muted mt-1 line-clamp-2">{activity.descripcion}</p>
+                        <p className="text-xs text-win11-gray-muted mt-2">
+                          {activity.tecnico} • Turno {activity.turno}
                         </p>
                       </div>
-                      <span className={`px-3 py-1 text-xs rounded-full ${
-                        activity.tipo === 'FALLA' ? 'bg-red-100 text-red-800' :
-                        activity.tipo === 'RUTINA' ? 'bg-green-100 text-green-800' :
-                        'bg-purple-100 text-purple-800'
-                      }`}>
+                      <span
+                        className={`px-3 py-1 text-xs font-medium rounded-win11-sm whitespace-nowrap ${
+                          activity.tipo === 'FALLA'
+                            ? 'bg-win11-red/10 text-win11-red'
+                            : activity.tipo === 'RUTINA'
+                            ? 'bg-win11-green/10 text-win11-green'
+                            : 'bg-win11-purple/10 text-win11-purple'
+                        }`}
+                      >
                         {activity.tipo}
                       </span>
                     </div>

@@ -94,29 +94,29 @@ const Activities = () => {
 
   return (
     <Layout>
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-800">Actividades</h1>
+      <div className="space-y-5">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-win11-gray-text">Actividades</h1>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="flex items-center justify-center space-x-2 bg-win11-blue-accent text-white px-4 py-2.5 rounded-win11-sm hover:bg-win11-blue-dark transition-colors shadow-win11"
           >
-            <Plus size={20} />
-            <span>Nueva Actividad</span>
+            <Plus size={18} />
+            <span className="font-medium">Nueva Actividad</span>
           </button>
         </div>
 
         {showForm && (
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Nueva Actividad</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white p-5 rounded-win11 shadow-win11 border border-win11-gray-border">
+            <h2 className="text-lg font-semibold text-win11-gray-text mb-5">Nueva Actividad</h2>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Tipo</label>
+                  <label className="block text-sm font-medium text-win11-gray-text mb-1.5">Tipo</label>
                   <select
                     value={formData.tipo}
                     onChange={(e) => setFormData({ ...formData, tipo: e.target.value as ActivityFormData['tipo'] })}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
+                    className="w-full px-3 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text focus:outline-none focus:ring-2 focus:ring-win11-blue-accent focus:border-transparent"
                     required
                   >
                     <option value="FALLA">Falla</option>
@@ -126,11 +126,11 @@ const Activities = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Categoría</label>
+                  <label className="block text-sm font-medium text-win11-gray-text mb-1.5">Categoría</label>
                   <select
                     value={formData.categoria}
                     onChange={(e) => setFormData({ ...formData, categoria: e.target.value as ActivityFormData['categoria'] })}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
+                    className="w-full px-3 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text focus:outline-none focus:ring-2 focus:ring-win11-blue-accent focus:border-transparent"
                     required
                   >
                     <option value="ZONA_CALIENTE">Zona Caliente</option>
@@ -141,22 +141,22 @@ const Activities = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Equipo</label>
+                  <label className="block text-sm font-medium text-win11-gray-text mb-1.5">Equipo</label>
                   <input
                     type="text"
                     value={formData.equipo}
                     onChange={(e) => setFormData({ ...formData, equipo: e.target.value })}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
+                    className="w-full px-3 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text focus:outline-none focus:ring-2 focus:ring-win11-blue-accent focus:border-transparent"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Turno</label>
+                  <label className="block text-sm font-medium text-win11-gray-text mb-1.5">Turno</label>
                   <select
                     value={formData.turno}
                     onChange={(e) => setFormData({ ...formData, turno: e.target.value })}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
+                    className="w-full px-3 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text focus:outline-none focus:ring-2 focus:ring-win11-blue-accent focus:border-transparent"
                     required
                   >
                     <option value="">Seleccione</option>
@@ -169,27 +169,27 @@ const Activities = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Descripción</label>
+                <label className="block text-sm font-medium text-win11-gray-text mb-1.5">Descripción</label>
                 <textarea
                   value={formData.descripcion}
                   onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
                   rows={4}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900"
+                  className="w-full px-3 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text focus:outline-none focus:ring-2 focus:ring-win11-blue-accent focus:border-transparent resize-none"
                   required
                 />
               </div>
 
-              <div className="flex justify-end space-x-4">
+              <div className="flex justify-end space-x-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text hover:bg-win11-gray-bg transition-colors"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 bg-win11-blue-accent text-white rounded-win11-sm hover:bg-win11-blue-dark transition-colors shadow-win11"
                 >
                   Guardar
                 </button>
@@ -198,22 +198,22 @@ const Activities = () => {
           </div>
         )}
 
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center space-x-4 mb-4">
+        <div className="bg-white p-5 rounded-win11 shadow-win11 border border-win11-gray-border">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-2.5 text-win11-gray-muted" size={18} />
               <input
                 type="text"
                 placeholder="Buscar por equipo o descripción..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md text-gray-900"
+                className="w-full pl-10 pr-4 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text focus:outline-none focus:ring-2 focus:ring-win11-blue-accent focus:border-transparent"
               />
             </div>
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as typeof filterType)}
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-900"
+              className="w-full sm:w-auto px-4 py-2 border border-win11-gray-border rounded-win11-sm text-win11-gray-text focus:outline-none focus:ring-2 focus:ring-win11-blue-accent focus:border-transparent"
             >
               <option value="ALL">Todos</option>
               <option value="FALLA">Fallas</option>
@@ -222,47 +222,48 @@ const Activities = () => {
             </select>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tipo</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Equipo</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Técnico</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Turno</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Descripción</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+          <div className="overflow-x-auto -mx-5 sm:mx-0">
+            <table className="min-w-full">
+              <thead>
+                <tr className="border-b border-win11-gray-border">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-win11-gray-muted uppercase tracking-wider">Tipo</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-win11-gray-muted uppercase tracking-wider">Equipo</th>
+                  <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-semibold text-win11-gray-muted uppercase tracking-wider">Técnico</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-win11-gray-muted uppercase tracking-wider">Turno</th>
+                  <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-semibold text-win11-gray-muted uppercase tracking-wider">Descripción</th>
+                  <th className="hidden sm:table-cell px-4 py-3 text-left text-xs font-semibold text-win11-gray-muted uppercase tracking-wider">Fecha</th>
                   {user?.tipo === 'admin' && (
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-win11-gray-muted uppercase tracking-wider">Acciones</th>
                   )}
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-win11-gray-border">
                 {filteredActivities.map((activity) => (
-                  <tr key={activity.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        activity.tipo === 'FALLA' ? 'bg-red-100 text-red-800' :
-                        activity.tipo === 'RUTINA' ? 'bg-green-100 text-green-800' :
-                        'bg-purple-100 text-purple-800'
+                  <tr key={activity.id} className="hover:bg-win11-gray-light transition-colors">
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <span className={`px-2.5 py-1 text-xs font-medium rounded-win11-sm ${
+                        activity.tipo === 'FALLA' ? 'bg-win11-red/10 text-win11-red' :
+                        activity.tipo === 'RUTINA' ? 'bg-win11-green/10 text-win11-green' :
+                        'bg-win11-purple/10 text-win11-purple'
                       }`}>
                         {activity.tipo}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{activity.equipo}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{activity.tecnico}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{activity.turno}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{activity.descripcion.substring(0, 50)}...</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-win11-gray-text font-medium">{activity.equipo}</td>
+                    <td className="hidden md:table-cell px-4 py-3 whitespace-nowrap text-sm text-win11-gray-text">{activity.tecnico}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-win11-gray-text">{activity.turno}</td>
+                    <td className="hidden lg:table-cell px-4 py-3 text-sm text-win11-gray-muted max-w-md truncate">{activity.descripcion}</td>
+                    <td className="hidden sm:table-cell px-4 py-3 whitespace-nowrap text-sm text-win11-gray-muted">
                       {activity.createdAt && new Date(activity.createdAt).toLocaleDateString()}
                     </td>
                     {user?.tipo === 'admin' && (
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <button
                           onClick={() => handleDelete(activity.id)}
-                          className="text-red-600 hover:text-red-900"
+                          className="p-1.5 text-win11-red hover:bg-win11-red/10 rounded-win11-sm transition-colors"
+                          title="Eliminar"
                         >
-                          <Trash2 size={18} />
+                          <Trash2 size={16} />
                         </button>
                       </td>
                     )}
@@ -273,7 +274,7 @@ const Activities = () => {
           </div>
 
           {filteredActivities.length === 0 && (
-            <p className="text-center text-gray-500 py-8">No hay actividades que mostrar</p>
+            <p className="text-center text-win11-gray-muted py-12">No hay actividades que mostrar</p>
           )}
         </div>
       </div>
