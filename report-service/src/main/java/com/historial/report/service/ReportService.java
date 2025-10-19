@@ -25,6 +25,17 @@ public class ReportService {
     @Value("${activity-service.url}")
     private String activityServiceUrl;
 
+    private String normalizeUrl(String url) {
+        if (url == null || url.isEmpty()) {
+            return url;
+        }
+        // Add https:// if no protocol is specified
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            return "https://" + url;
+        }
+        return url;
+    }
+
     public ActivitySummary getActivitySummary() {
         try {
             List<ActivityDTO> activities = fetchAllActivities();
@@ -77,9 +88,10 @@ public class ReportService {
 
     public List<ActivityDTO> getActivitiesByEquipo(String equipo) {
         try {
+            String url = normalizeUrl(activityServiceUrl);
             List<ActivityDTO> result = webClientBuilder.build()
                     .get()
-                    .uri(activityServiceUrl + "/api/activities/equipo/" + equipo)
+                    .uri(url + "/api/activities/equipo/" + equipo)
                     .retrieve()
                     .bodyToMono(new ParameterizedTypeReference<List<ActivityDTO>>() {})
                     .block();
@@ -95,9 +107,10 @@ public class ReportService {
 
     public List<ActivityDTO> getActivitiesByType(String tipo) {
         try {
+            String url = normalizeUrl(activityServiceUrl);
             List<ActivityDTO> result = webClientBuilder.build()
                     .get()
-                    .uri(activityServiceUrl + "/api/activities/type/" + tipo)
+                    .uri(url + "/api/activities/type/" + tipo)
                     .retrieve()
                     .bodyToMono(new ParameterizedTypeReference<List<ActivityDTO>>() {})
                     .block();
@@ -113,10 +126,11 @@ public class ReportService {
 
     private List<ActivityDTO> fetchAllActivities() {
         try {
-            log.debug("Fetching all activities from: {}/api/activities", activityServiceUrl);
+            String url = normalizeUrl(activityServiceUrl);
+            log.debug("Fetching all activities from: {}/api/activities", url);
             List<ActivityDTO> result = webClientBuilder.build()
                     .get()
-                    .uri(activityServiceUrl + "/api/activities")
+                    .uri(url + "/api/activities")
                     .retrieve()
                     .bodyToMono(new ParameterizedTypeReference<List<ActivityDTO>>() {})
                     .block();
@@ -126,8 +140,9 @@ public class ReportService {
             log.error("Error fetching activities - Status: {}, Body: {}", e.getStatusCode(), e.getResponseBodyAsString(), e);
             throw new RuntimeException("Failed to fetch activities from activity service: " + e.getMessage(), e);
         } catch (Exception e) {
-            log.error("Unexpected error fetching all activities from: {}", activityServiceUrl, e);
-            throw new RuntimeException("Failed to connect to activity service at: " + activityServiceUrl, e);
+            String url = normalizeUrl(activityServiceUrl);
+            log.error("Unexpected error fetching all activities from: {}", url, e);
+            throw new RuntimeException("Failed to connect to activity service at: " + url, e);
         }
     }
 }
