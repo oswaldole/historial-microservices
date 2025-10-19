@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/activities")
 @RequiredArgsConstructor
 @Tag(name = "Activities", description = "Activity management endpoints")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
+@CrossOrigin(originPatterns = {"*"})
 public class ActivityController {
 
     private final ActivityService activityService;

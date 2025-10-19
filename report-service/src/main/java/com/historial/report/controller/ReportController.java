@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/reports")
 @RequiredArgsConstructor
 @Tag(name = "Reports", description = "Reporting and analytics endpoints")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
+@CrossOrigin(originPatterns = {"*"})
 public class ReportController {
 
     private final ReportService reportService;
